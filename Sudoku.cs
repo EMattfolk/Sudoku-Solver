@@ -36,7 +36,7 @@ namespace Sudoku
             }
         }
 
-        public void Solve ()
+        public void Solve () //solves the Sudoku
         {
             while (numbers_left > 0)
             {
