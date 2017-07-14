@@ -8,6 +8,7 @@ namespace Sudoku
 {
     class Sudoku
     {
+        private List<int> board_list;
         private List<int>[] possibilities;
         private int numbers_left;
         private int[] board;
@@ -38,23 +39,30 @@ namespace Sudoku
 
         public void Solve () //solves the Sudoku
         {
-            while (numbers_left > 0)
+            int old_numbers_left = int.MaxValue;
+            while (numbers_left < old_numbers_left)
             {
+                old_numbers_left = numbers_left;
                 lone_possibility_check();
                 lone_in_region_check(row_indexes);
                 lone_in_region_check(col_indexes);
                 lone_in_region_check(box_indexes);
             }
+            if (numbers_left != 0)
+            {
+                board_list = board.ToList();
+                brute_force();
+            }
         }
 
-        private void simple_remove_possibilities(int n, int index) //removes the number n from the possibilities within the column, row and box.
+        private void simple_remove_possibilities(int number, int index) //removes the number n from the possibilities within the column, row and box.
         {
             int row = row_number(index), col = col_number(index), box = box_number(index);
             for (int i = 0; i < 9; i++)
             {
-                if (board[row_indexes[row][i]] == 0) { possibilities[row_indexes[row][i]].Remove(n); }
-                if (board[col_indexes[col][i]] == 0) { possibilities[col_indexes[col][i]].Remove(n); }
-                if (board[box_indexes[box][i]] == 0) { possibilities[box_indexes[box][i]].Remove(n); }
+                if (board[row_indexes[row][i]] == 0) { possibilities[row_indexes[row][i]].Remove(number); }
+                if (board[col_indexes[col][i]] == 0) { possibilities[col_indexes[col][i]].Remove(number); }
+                if (board[box_indexes[box][i]] == 0) { possibilities[box_indexes[box][i]].Remove(number); }
             }
         }
 
@@ -100,6 +108,44 @@ namespace Sudoku
                     }
                 }
             }
+        }
+
+        private bool brute_force () //find solution through brute force. requires board_list to be initialized
+        {
+            if (board_list.Contains(0))
+            {
+                int index = board_list.IndexOf(0);
+                foreach (int number in possibilities[index])
+                {
+                    if (is_legal(number, index))
+                    {
+                        board_list[index] = number;
+                        if (brute_force())
+                        {
+                            return true;
+                        }
+                    }
+                }
+                board_list[index] = 0;
+                return false;
+            }
+            else
+            {
+                board = board_list.ToArray();
+                return true;
+            }
+        }
+
+        private bool is_legal (int number, int index) //check if number can be placed at index. requires board_list
+        {
+            int row = row_number(index), col = col_number(index), box = box_number(index);
+            for (int i = 0; i < 9; i++)
+            {
+                if (board_list[row_indexes[row][i]] == number) { return false; }
+                if (board_list[col_indexes[col][i]] == number) { return false; }
+                if (board_list[box_indexes[box][i]] == number) { return false; }
+            }
+            return true;
         }
 
         private void found_at (int number, int index) //use when a number is found
