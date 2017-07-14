@@ -54,7 +54,15 @@ namespace Sudoku
             board = sudoku.Board;
             for (int i = 0; i < 81; i++)
             {
-                number_boxes[i].Text = board[i].ToString();
+                number_boxes[i].Text = board[i] == 0 ? "" : board[i].ToString();
+            }
+        }
+
+        private void resetButton_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < 81; i++)
+            {
+                number_boxes[i].Text = "";
             }
         }
     }

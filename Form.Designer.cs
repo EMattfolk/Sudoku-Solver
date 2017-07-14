@@ -34,6 +34,7 @@
             this.verticalline1 = new System.Windows.Forms.Label();
             this.verticalline2 = new System.Windows.Forms.Label();
             this.solveButton = new System.Windows.Forms.Button();
+            this.resetButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -98,7 +99,7 @@
             // 
             // solveButton
             // 
-            this.solveButton.Location = new System.Drawing.Point(87, 284);
+            this.solveButton.Location = new System.Drawing.Point(44, 283);
             this.solveButton.Name = "solveButton";
             this.solveButton.Size = new System.Drawing.Size(86, 23);
             this.solveButton.TabIndex = 5;
@@ -106,11 +107,22 @@
             this.solveButton.UseVisualStyleBackColor = true;
             this.solveButton.Click += new System.EventHandler(this.solveButton_Click);
             // 
+            // resetButton
+            // 
+            this.resetButton.Location = new System.Drawing.Point(136, 283);
+            this.resetButton.Name = "resetButton";
+            this.resetButton.Size = new System.Drawing.Size(75, 23);
+            this.resetButton.TabIndex = 6;
+            this.resetButton.Text = "Reset";
+            this.resetButton.UseVisualStyleBackColor = true;
+            this.resetButton.Click += new System.EventHandler(this.resetButton_Click);
+            // 
             // Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(260, 336);
+            this.Controls.Add(this.resetButton);
             this.Controls.Add(this.solveButton);
             this.Controls.Add(this.verticalline2);
             this.Controls.Add(this.verticalline1);
@@ -132,6 +144,7 @@
         private System.Windows.Forms.Label verticalline1;
         private System.Windows.Forms.Label verticalline2;
         private System.Windows.Forms.Button solveButton;
+        private System.Windows.Forms.Button resetButton;
     }
 }
 
